@@ -11,8 +11,8 @@ class Winston():
 
 		# Build Message
 		message = []
-		message.append("From: {}".format(self.account, self.account))
-		message.append("To: {}".format(recipient, recipient))
+		message.append("From: {}".format(self.account))
+		message.append("To: {}".format(recipient))
 		message.append("Subject: {}".format(subject))
 		message.append("")
 		message.append(content)
