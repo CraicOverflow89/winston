@@ -35,6 +35,7 @@
 				<td></td>
 				<td>
 					<input id = "compose_send" type = "button" value = "Send" />
+					<input id = "compose_cancel" type = "button" value = "Cancel" />
 				</td>
 			</tr>
 		</table>
@@ -44,6 +45,9 @@
 			if(!document.getElementById("compose_recipient").value.length) return;
 			if(!document.getElementById("compose_subject").value.length) return;
 			document.getElementById("compose_form").submit();
+		});
+		document.getElementById("compose_cancel").addEventListener("click", function() {
+			window.open("inbox", "_self");
 		});
 	</script>
 {% endblock %}

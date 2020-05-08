@@ -11,6 +11,10 @@ table tr {
 	vertical-align: top;
 }
 
+table.bordered > tbody > tr > td {
+	border: 1px solid rgba(0, 0, 0, 1);
+}
+
 table.padded > tbody > tr > td {
 	padding: 5px;
 }

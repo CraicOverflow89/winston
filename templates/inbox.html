@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Inbox
+{% endblock %}
+
+{% block content %}
+	<input id = "inbox_compose" type = "button" value = "Compose" />
+	<br><br>
+	<table class = "padded bordered">
+		<tr>
+			<td>
+				Subject
+			</td>
+			<td>
+				From
+			</td>
+			<td>
+				Date
+			</td>
+		</tr>
+		{% for message in data %}
+			<tr>
+				<td>
+					{{ message.subject }}
+				</td>
+				<td>
+					{{ message.sender }}
+				</td>
+				<td>
+					?
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<script>
+		document.getElementById("inbox_compose").addEventListener("click", function() {
+			window.open("compose", "_self");
+		});
+	</script>
+{% endblock %}
