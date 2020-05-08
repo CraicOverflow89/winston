@@ -37,17 +37,41 @@ class Winston():
 		smtp.quit()
 		return result
 
-	def get_message(self, folder: str, id):
+	def get_message(self, folder: str, id: int):
 		def logic(imap):
+
+			# Message Data
 			imap.select(folder, True)
-			(_, data) = imap.fetch(id, "(RFC822)")
+			(_, data) = imap.fetch(str(id).encode(), "(RFC822)")
 			data = email.message_from_string(data[0][1].decode())
-			sender_name, sender = re.findall("(.*) \<(.*)\>", data["From"])[0]
+
+			# Sender Data
+			def parse_sender(value: str):
+
+				# Default Values
+				result = {
+					"email" : value,
+					"name"  : value
+				}
+
+				# Multiple Values
+				if re.search(".* \<.*>", value):
+					name, email = re.findall("(.*) \<(.*)\>", value)[0]
+					result.update({
+						"email" : email,
+						"name"  : name
+					})
+
+				# Return Result
+				return result
+			sender = parse_sender(data["From"])
+
+			# Return Message
 			return {
 				"content"     : data.get_payload(),
 				"date"        : datetime.datetime.strptime(data["Date"], "%a, %d %B %Y %H:%M:%S %z"),
-				"sender"      : sender,
-				"sender_name" : sender_name,
+				"sender"      : sender["email"],
+				"sender_name" : sender["name"],
 				"subject"     : email.header.decode_header(data["Subject"])[0][0]
 			}
 		return self._imap(logic)
@@ -67,9 +91,8 @@ class Winston():
 			(_, data) = imap.search(None, "ALL")
 			result = []
 			for id in data[0].split():
-				result.append(id)
+				result.append(id.decode())
 			return result
-			# NOTE: this returns message IDs (keeps byte type for use in get_message method)
 		return self._imap(logic)
 
 	def send(self, recipient: str, subject: str, content: str):

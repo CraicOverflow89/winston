@@ -15,11 +15,11 @@ account, password = account_data()
 test = Winston("smtp.live.com", 587, account, password)
 #test.send("*****@hotmail.com", "Test", "Hello World")
 for folder in test.list_folders():
-	unread = test.list_messages(folder)
-	if(len(unread)):
+	message_id_list = test.list_messages(folder)
+	if(len(message_id_list)):
 		print("\n{}".format(folder))
 		data = []
-		for id in unread:
+		for id in message_id_list:
 			data.append(test.get_message(folder, id))
 		data.sort(key = lambda e: e["date"], reverse = True)
 		for message in data:
