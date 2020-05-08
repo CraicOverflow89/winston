@@ -13,4 +13,5 @@ def account_data():
 # Execute Test
 account, password = account_data()
 test = Winston("smtp.live.com", 587, account, password)
-test.send("*****@hotmail.com", "Test", "Hello World")
+#test.send("*****@hotmail.com", "Test", "Hello World")
+print(test.list_folders())
