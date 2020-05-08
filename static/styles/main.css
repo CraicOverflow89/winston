@@ -44,20 +44,12 @@ text.title {
 
 div#header {
 	background-color: rgba(60, 60, 60, 1);
-	height: 50px;
+	height: 46px;
 	left: 0px;
 	position: absolute;
 	top: 0px;
 	width: 100%;
 	z-index: 1;
-}
-
-div#header > table tr {
-	vertical-align: top;
-}
-
-div#header > table tr:first-child {
-	vertical-align: bottom;
 }
 
 div#header img.logo {
