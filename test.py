@@ -18,5 +18,9 @@ for folder in test.list_folders():
 	unread = test.list_messages(folder)
 	if(len(unread)):
 		print("\n{}".format(folder))
+		data = []
 		for id in unread:
-			print(test.get_message(folder, id))
+			data.append(test.get_message(folder, id))
+		data.sort(key = lambda e: e["date"], reverse = True)
+		for message in data:
+			print(message)

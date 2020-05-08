@@ -28,6 +28,7 @@ def inbox():
 	data = []
 	for id in w.list_messages("Inbox"):
 		data.append(w.get_message("Inbox", id))
+	data.sort(key = lambda e: e["date"], reverse = True)
 
 	# TEMP CONTENT
 	return render_template("inbox.html", data=data)

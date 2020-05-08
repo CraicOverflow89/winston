@@ -45,7 +45,7 @@ class Winston():
 			sender_name, sender = re.findall("(.*) \<(.*)\>", data["From"])[0]
 			return {
 				"content"     : data.get_payload(),
-				"date"        : data["Date"],
+				"date"        : datetime.datetime.strptime(data["Date"], "%a, %d %B %Y %H:%M:%S %z"),
 				"sender"      : sender,
 				"sender_name" : sender_name,
 				"subject"     : email.header.decode_header(data["Subject"])[0][0]
@@ -64,9 +64,7 @@ class Winston():
 		def logic(imap):
 			imap.select(folder, True)
 			# NOTE: this sets readonly to True (so unread messages will not be marked as read)
-			date = (datetime.date.today() - datetime.timedelta(1)).strftime("%d-%b-%Y")
-			(_, data) = imap.search(None, ('UNSEEN'), '(SENTSINCE {0})'.format(date))
-			# NOTE: this gets unread messages from after yesterday
+			(_, data) = imap.search(None, "ALL")
 			result = []
 			for id in data[0].split():
 				result.append(id)
