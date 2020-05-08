@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, url_for
 from winston.app import Winston
-import os, re
+import datetime, os, re
 
 app = Flask(__name__)
 
@@ -40,3 +40,10 @@ def _winston():
 		return re.split("\\|", result)
 	account, password = account_data()
 	return Winston("smtp.live.com", 587, account, password)
+
+@app.template_filter()
+def format_datetime(value):
+	if value.date() == datetime.date.today():
+		return value.strftime("%H:%M:%S")
+	else:
+		return value.strftime("%d/%m/%Y, %H:%M:%S")

@@ -28,7 +28,7 @@
 					{{ message["sender_name"] }}
 				</td>
 				<td>
-					{{ message.date }}
+					{{ message.date|format_datetime }}
 				</td>
 			</tr>
 		{% endfor %}
