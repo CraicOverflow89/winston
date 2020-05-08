@@ -1,4 +1,4 @@
-import datetime, imaplib, re, smtplib, sys
+import datetime, email, imaplib, re, smtplib, sys
 
 class Winston():
 
@@ -37,6 +37,18 @@ class Winston():
 		smtp.quit()
 		return result
 
+	def get_message(self, folder: str, id):
+		def logic(imap):
+			imap.select(folder, True)
+			(_, data) = imap.fetch(id, "(RFC822)")
+			data = email.message_from_string(data[0][1].decode())
+			return {
+				"content" : data.get_payload(),
+				"sender"  : data["From"],
+				"subject" : email.header.decode_header(data["Subject"])[0][0]
+			}
+		return self._imap(logic)
+
 	def list_folders(self):
 		def logic(imap):
 			result = []
@@ -54,8 +66,9 @@ class Winston():
 			# NOTE: this gets unread messages from after yesterday
 			result = []
 			for id in data[0].split():
-				result.append(id.decode())
+				result.append(id)
 			return result
+			# NOTE: this returns message IDs (keeps byte type for use in get_message method)
 		return self._imap(logic)
 
 	def send(self, recipient: str, subject: str, content: str):

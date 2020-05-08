@@ -18,4 +18,5 @@ for folder in test.list_folders():
 	unread = test.list_messages(folder)
 	if(len(unread)):
 		print("\n{}".format(folder))
-		print(unread)
+		for id in unread:
+			print(test.get_message(folder, id))
