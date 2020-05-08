@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block content %}
-	<form method = "POST" action = "compose">
+	<form id = "compose_form" method = "POST" action = "compose">
 		<table class = "padded">
 			<tr>
 				<td>
 					Recipient
 				</td>
 				<td>
-					<input name = "recipient" type = "text" />
+					<input id = "compose_recipient" name = "recipient" type = "text" />
 				</td>
 			</tr>
 			<tr>
@@ -20,7 +20,7 @@
 					Subject
 				</td>
 				<td>
-					<input name = "subject" type = "text" />
+					<input id = "compose_subject" name = "subject" type = "text" />
 				</td>
 			</tr>
 			<tr>
@@ -28,15 +28,22 @@
 					Message
 				</td>
 				<td>
-					<textarea name = "content"></textarea>
+					<textarea id = "compose_content" name = "content"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>
-					<input type = "submit" value = "Send" />
+					<input id = "compose_send" type = "button" value = "Send" />
 				</td>
 			</tr>
 		</table>
 	</form>
+	<script>
+		document.getElementById("compose_send").addEventListener("click", function() {
+			if(!document.getElementById("compose_recipient").value.length) return;
+			if(!document.getElementById("compose_subject").value.length) return;
+			document.getElementById("compose_form").submit();
+		});
+	</script>
 {% endblock %}
