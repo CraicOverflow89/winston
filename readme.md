@@ -1,7 +1,7 @@
 Winston Project
 ===============
 
-Python SMTP app. Will be playing with Flask and Angular for next stage.
+Viewing and sending emails using Python. Web application interface with Flask.
 
 ### Testing
 
@@ -19,3 +19,7 @@ $ . venv/bin/activate
 # Run Application
 $ flask run
 ```
+
+### See Also
+
+ - [front end](https://github.com/CraicOverflow89/winston-fe)
