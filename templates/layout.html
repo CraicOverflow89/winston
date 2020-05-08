@@ -2,8 +2,18 @@
 <html>
 	<head>
 		<title>Winston</title>
+		<link rel = "stylesheet" href = "{{ url_for('static', filename='styles/main.css') }}" />
 	</head>
 	<body>
-		{% block content %}{% endblock %}
+		<table class = "padded">
+			<tr>
+				<td>
+					<text class = "title">{% block title %}Welcome{% endblock %}</text>
+				</td>
+			</tr>
+			<tr>
+				<td>{% block content %}{% endblock %}</td>
+			</tr>
+		</table>
 	</body>
 </html>

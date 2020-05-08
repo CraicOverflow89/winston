@@ -1,0 +1,20 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table tr {
+	vertical-align: top;
+}
+
+table.padded > tbody > tr > td {
+	padding: 5px;
+}
+
+text.title {
+	font-size: 150%;
+}

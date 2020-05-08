@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Compose Message
+{% endblock %}
+
+{% block content %}
+	<form method = "POST" action = "compose">
+		<table class = "padded">
+			<tr>
+				<td>
+					Recipient
+				</td>
+				<td>
+					<input name = "recipient" type = "text" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Subject
+				</td>
+				<td>
+					<input name = "subject" type = "text" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Message
+				</td>
+				<td>
+					<textarea name = "content"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type = "submit" value = "Send" />
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}
