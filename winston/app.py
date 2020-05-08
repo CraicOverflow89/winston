@@ -45,6 +45,19 @@ class Winston():
 			return result
 		return self._imap(logic)
 
+	def list_messages(self, folder: str):
+		def logic(imap):
+			imap.select(folder, True)
+			# NOTE: this sets readonly to True (so unread messages will not be marked as read)
+			date = (datetime.date.today() - datetime.timedelta(1)).strftime("%d-%b-%Y")
+			(_, data) = imap.search(None, ('UNSEEN'), '(SENTSINCE {0})'.format(date))
+			# NOTE: this gets unread messages from after yesterday
+			result = []
+			for id in data[0].split():
+				result.append(id.decode())
+			return result
+		return self._imap(logic)
+
 	def send(self, recipient: str, subject: str, content: str):
 
 		# Build Message
