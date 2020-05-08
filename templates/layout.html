@@ -5,14 +5,26 @@
 		<link rel = "stylesheet" href = "{{ url_for('static', filename='styles/main.css') }}" />
 	</head>
 	<body>
-		<table class = "padded">
-			<tr>
-				<td>
-					<text class = "title">{% block title %}Welcome{% endblock %}</text>
-				</td>
+		<table id = "root" class = "fill">
+			<tr height = "50">
+				<td colspan = "3">{% include "header.html" %}</td>
 			</tr>
-			<tr>
-				<td>{% block content %}{% endblock %}</td>
+			<tr height = "*">
+				<td width = "20"></td>
+				<td>
+					<br>
+					<table class = "padded">
+						<tr>
+							<td>
+								<text class = "title">{% block title %}{% endblock %}</text>
+							</td>
+						</tr>
+						<tr>
+							<td>{% block content %}{% endblock %}</td>
+						</tr>
+					</table>
+				</td>
+				<td width = "20"></td>
 			</tr>
 		</table>
 	</body>

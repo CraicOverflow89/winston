@@ -3,22 +3,72 @@
 	padding: 0px;
 }
 
+body {
+	background-color: rgba(36, 36, 36, 1);
+	color: rgba(255, 255, 255, 1);
+	font-family: monospace;
+}
+
+.fill {
+	height: 100%;
+	width: 100%
+}
+
+input, textarea {
+	font-family: monospace;
+}
+
+input[type="button"] {
+	padding: 2px 5px;
+}
+
 table {
 	border-collapse: collapse;
 }
 
-table tr {
-	vertical-align: top;
-}
-
 table.bordered > tbody > tr > td {
-	border: 1px solid rgba(0, 0, 0, 1);
+	border: 1px solid rgba(255, 255, 255, 1);
 }
 
 table.padded > tbody > tr > td {
 	padding: 5px;
 }
 
+tr {
+	vertical-align: top;
+}
+
 text.title {
 	font-size: 150%;
+}
+
+div#header {
+	background-color: rgba(60, 60, 60, 1);
+	height: 50px;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	z-index: 1;
+}
+
+div#header > table tr {
+	vertical-align: top;
+}
+
+div#header > table tr:first-child {
+	vertical-align: bottom;
+}
+
+div#header img.logo {
+	height: 36px;
+	width: 58px;
+}
+
+div#header text.header {
+	font-size: 150%;
+}
+
+div#header text.small {
+	font-size: 90%;
 }
