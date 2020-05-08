@@ -42,10 +42,13 @@ class Winston():
 			imap.select(folder, True)
 			(_, data) = imap.fetch(id, "(RFC822)")
 			data = email.message_from_string(data[0][1].decode())
+			sender_name, sender = re.findall("(.*) \<(.*)\>", data["From"])[0]
 			return {
-				"content" : data.get_payload(),
-				"sender"  : data["From"],
-				"subject" : email.header.decode_header(data["Subject"])[0][0]
+				"content"     : data.get_payload(),
+				"date"        : data["Date"],
+				"sender"      : sender,
+				"sender_name" : sender_name,
+				"subject"     : email.header.decode_header(data["Subject"])[0][0]
 			}
 		return self._imap(logic)
 

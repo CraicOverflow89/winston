@@ -13,12 +13,7 @@ def compose():
 	if request.method == "POST":
 
 		# TEST SEND
-		def account_data():
-			with open(os.path.join(os.path.dirname(os.path.realpath("__file__")), "account")) as fs:
-				result = fs.read()
-			return re.split("\\|", result)
-		account, password = account_data()
-		Winston("smtp.live.com", 587, account, password).send(request.form['recipient'], request.form['subject'], request.form['content'])
+		_winston().send(request.form['recipient'], request.form['subject'], request.form['content'])
 
 		# TEMP CONTENT
 		return "Message Sent"
@@ -29,15 +24,18 @@ def compose():
 def inbox():
 
 	# TEST FETCH
-	def account_data():
-		with open(os.path.join(os.path.dirname(os.path.realpath("__file__")), "account")) as fs:
-			result = fs.read()
-		return re.split("\\|", result)
-	account, password = account_data()
-	w = Winston("smtp.live.com", 587, account, password)
+	w = _winston()
 	data = []
 	for id in w.list_messages("Inbox"):
 		data.append(w.get_message("Inbox", id))
 
 	# TEMP CONTENT
 	return render_template("inbox.html", data=data)
+
+def _winston():
+	def account_data():
+		with open(os.path.join(os.path.dirname(os.path.realpath("__file__")), "account")) as fs:
+			result = fs.read()
+		return re.split("\\|", result)
+	account, password = account_data()
+	return Winston("smtp.live.com", 587, account, password)
