@@ -1,7 +1,7 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask_cors import CORS
 from winston.app import Winston
-import datetime, os, re
+import datetime, json, os, re
 
 app = Flask(__name__)
 CORS(app)
@@ -10,6 +10,24 @@ CORS(app)
 def root():
     return redirect(url_for("inbox"))
 
+@app.route("/folder", methods = ["GET"])
+def folder_all():
+	return json.dumps(_winston().list_folders())
+
+@app.route("/folder/<string:name>", methods = ["GET"])
+def folder_get(name: str):
+	w = _winston()
+	data = []
+	for id in w.list_messages(name):
+		data.append(w.get_message(name, id))
+	data.sort(key = lambda e: e["date"], reverse = True)
+	return json.dumps(data, default = str)
+
+@app.route("/folder/<string:name>/message/<int:id>", methods = ["GET"])
+def message_get(name: str, id: int):
+	return json.dumps(_winston().get_message(name, id), default = str)
+
+# TO BE DELETED
 @app.route("/compose", methods = ["GET", "POST"])
 def compose():
 	if request.method == "POST":
@@ -22,6 +40,7 @@ def compose():
 	else:
 		return render_template("compose.html")
 
+# TO BE DELETED
 @app.route("/inbox")
 def inbox():
 
@@ -43,6 +62,7 @@ def _winston():
 	account, password = account_data()
 	return Winston("smtp.live.com", 587, account, password)
 
+# TO BE DELETED
 @app.template_filter()
 def format_datetime(value):
 	if value.date() == datetime.date.today():
