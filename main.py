@@ -12,7 +12,8 @@ def root():
 
 @app.route("/folder", methods = ["GET"])
 def folder_all():
-	return json.dumps(_winston().list_folders())
+	data = _winston().list_folders()
+	return render_template("folders.html", data=data)
 
 @app.route("/folder/<string:name>", methods = ["GET"])
 def folder_get(name: str):
@@ -50,6 +51,7 @@ def inbox():
 	for id in w.list_messages("Inbox"):
 		data.append(w.get_message("Inbox", id))
 	data.sort(key = lambda e: e["date"], reverse = True)
+	# TODO: pass limit by x messages to list_messages as arg
 
 	# TEMP CONTENT
 	return render_template("inbox.html", data=data)
