@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Folders
+{% endblock %}
+
+{% block content %}
+    {% for folder in data %}
+        <a href="folder/{{ folder }}">{{ folder }}</a><br>
+    {% endfor %}
+{% endblock %}

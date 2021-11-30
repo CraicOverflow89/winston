@@ -9,6 +9,12 @@ body {
 	font-family: monospace;
 }
 
+a, a:active, a:hover {
+	color: rgba(255, 255, 255, 1);
+	font-family: monospace;
+	text-decoration: none;
+}
+
 .fill {
 	height: 100%;
 	width: 100%
