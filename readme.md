@@ -14,7 +14,7 @@ Using _venv_ with flask and dependencies installed.
 
 ```
 # Environment Variable
-export FLASK_APP=main.py
+$ export FLASK_APP=main.py
 # or (on Windows) set FLASK_APP=main.py
 
 # Activate Environment
