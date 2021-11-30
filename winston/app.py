@@ -3,12 +3,27 @@ import datetime, email, imaplib, re, smtplib, sys
 class Winston():
 
 	def __init__(self, host: str, port: int, account: str, password: str):
+		"""
+		Initialises the Winston core
+
+		:param host: the host to connect to
+		:param port: the port to connect to
+		:param account: the email account
+		:param password: the account password
+		:return: instance of Winston core
+		"""
 		self.host = host
 		self.port = port
 		self.account = account
 		self.password = password
 
 	def _imap(self, logic):
+		"""
+		Performs a task using imap
+
+		:param logic: the callable to perform using imap
+		:return: result of the task
+		"""
 
 		# Establish Connection
 		imap = imaplib.IMAP4_SSL(self.host)
@@ -22,6 +37,12 @@ class Winston():
 		return result
 
 	def _smtp(self, logic):
+		"""
+		Performs a task using smtp
+
+		:param logic: the callable to perform using smtp
+		:return: result of the task
+		"""
 
 		# Establish Connection
 		smtp = smtplib.SMTP(self.host, self.port)
@@ -38,6 +59,13 @@ class Winston():
 		return result
 
 	def get_message(self, folder: str, id: int):
+		"""
+		Fetches an email message by id
+
+		:param folder: the folder to fetch from
+		:param id: the id of the message to fetch
+		:return: dict of message data
+		"""
 		def logic(imap):
 
 			# Message Data
@@ -78,6 +106,11 @@ class Winston():
 		return self._imap(logic)
 
 	def list_folders(self):
+		"""
+		Fetches folders of the account
+
+		:return: list of folder names
+		"""
 		def logic(imap):
 			result = []
 			for folder in imap.list()[1]:
@@ -86,6 +119,12 @@ class Winston():
 		return self._imap(logic)
 
 	def list_messages(self, folder: str):
+		"""
+		Fetches messages of a folder
+
+		:param folder: the folder to fetch from
+		:return: list of message data
+		"""
 		def logic(imap):
 			imap.select(folder, True)
 			# NOTE: this sets readonly to True (so unread messages will not be marked as read)
@@ -102,6 +141,14 @@ class Winston():
 		return self._imap(logic)
 
 	def send(self, recipient: str, subject: str, content: str):
+		"""
+		Sends an email message
+
+		:param recipient: the email recipient
+		:param subject: the email subject
+		:param content: the email content
+		:return: None
+		"""
 
 		# Build Message
 		message = []
@@ -116,6 +163,7 @@ class Winston():
 		def logic(smtp):
 			try:
 				smtp.sendmail(self.account, recipient, message)
+				# NOTE: anything to return from this?
 			except smtplib.SMTPException:
 				print("Error Encountered")
 				print(sys.exc_info())
