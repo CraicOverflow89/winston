@@ -44,6 +44,11 @@ tr {
 	vertical-align: top;
 }
 
+text.no-carot {
+	cursor: default;
+	user-select: none;
+}
+
 text.title {
 	font-size: 150%;
 }
