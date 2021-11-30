@@ -69,11 +69,12 @@ class Winston():
 			# Return Message
 			return {
 				"content"     : data.get_payload(),
-				"date"        : datetime.datetime.strptime(data["Date"], "%a, %d %B %Y %H:%M:%S %z"),
+				"date"        : data["Date"],
 				"sender"      : sender["email"],
 				"sender_name" : sender["name"],
 				"subject"     : email.header.decode_header(data["Subject"])[0][0]
 			}
+			#"date"        : datetime.datetime.strptime(data["Date"], "%a, %d %B %Y %H:%M:%S %z"),
 		return self._imap(logic)
 
 	def list_folders(self):
@@ -90,9 +91,14 @@ class Winston():
 			# NOTE: this sets readonly to True (so unread messages will not be marked as read)
 			(_, data) = imap.search(None, "ALL")
 			result = []
-			for id in data[0].split():
+			# for id in data[0].split():
+			# 	result.append(id.decode())
+			# return result
+			# TEMP: fetching latest five messages
+			for id in data[0].split()[-5:]:
 				result.append(id.decode())
 			return result
+			# TODO: ordering (just iterate backwards in the view)?
 		return self._imap(logic)
 
 	def send(self, recipient: str, subject: str, content: str):
