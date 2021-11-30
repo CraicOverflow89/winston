@@ -93,6 +93,7 @@ class Winston():
 				# Return Result
 				return result
 			sender = parse_sender(data["From"])
+			# NOTE: [name, email] = parse_sender(data["From"]) ?
 
 			# Return Message
 			return {
